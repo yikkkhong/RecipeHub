@@ -1,0 +1,140 @@
+/* Style: basic layout and sliding effect */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/bg.jpg');
+  }
+  
+  .headerClass {
+    background-color: #af704c;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 1em;
+  }
+  
+/* CSS for Instagram-like post layout */
+.post-container {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.photo-gallery {
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+    height: auto;
+    width: 100%;
+}
+
+.post-photo {
+    width: 100%;
+    max-height: 600px;
+}
+
+.post-details {
+    padding: 10px;
+}
+
+.likes {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.description {
+    font-size: 14px;
+    color: #262626;
+}
+
+  
+  #postButton {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin-top: 20px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+/* Pop up Window design */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal input[type="text"],
+.modal input[type="file"],
+.modal button {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+
+/* Style for Edit and Delete buttons */
+.edit-button, .delete-button {
+  background-color: #ff8c00;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edit-button:hover, .delete-button:hover {
+  background-color: #ff6f00;
+}

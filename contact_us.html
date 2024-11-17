@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: "images/homepage1.jpg";
+
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 121px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .heading {
+            font-size: 24px;
+            color: #af704c;
+            margin-bottom: 20px;
+        }
+
+        .contact-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .contact-details a {
+            color: #af704c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #777;
+        }
+
+        .action-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #af704c;
+        }
+    </style>
+</head>
+<body>
+      <!-- Header -->
+  <header>
+    <div class="logo">RecipeHub</div>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="about_us.html">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <a href="profile.html" class="profile-button">
+            <img id="profileDisplay" alt="User Profile Picture" />
+        </a>
+    </nav>
+</header>
+
+
+    <!-- Main content container for contact information -->
+    <div class="content-container">
+        <div class="contact-info">
+            <h1 class="heading">Feel free to reach us</h1> <!-- Main heading for contact information -->
+            <div class="contact-details">
+                <p>Email: <a href="mailto:i22023212@student.newinti.edu.my">i22023212@student.newinti.edu.my</a></p> <!-- Display email address -->
+                <p>Phone Number: <a href="tel:+601137062005">+601137062005</a></p> <!-- Display phone number -->
+                <p>Location: <a href="https://sites.google.com/student.newinti.edu.my/iudigitalhub/home?authuser=0">INTI International University</a></p> <!-- Display location -->
+                <p>Instagram: <a href="https://www.instagram.com/2yikhong0/">@2yikhong0</a></p> <!-- Display Instagram handle -->
+            </div>            
+        </div>
+
+        <div class="divider">or</div> <!-- Divider between contact info and button -->
+
+        <!-- Button to initiate email communication -->
+        <button class="action-button" id="openGmailButton" onclick="location.href='mailto:i22023212@student.newinti.edu.my';">Email us Directly</button>
+    </div>
+
+      <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 RecipeHub. All Rights Reserved.</p>
+  </footer>
+
+  
+</body>
+<script>
+    // open gmail website function
+document.getElementById('openGmailButton').onclick = function() {
+    const email = 'i22023212@student.newinti.edu.my'; // the email to pre-fill
+    const subject = 'Client Request : Your Subject'; // Subjest pre-fill (Optional)
+    const body = '----Please include your name and phone number for further discussions----'; // Body pre-fill (Optional)
+    const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink, '_blank');
+};
+</script>
+
+<script>
+    try {
+        // Get the user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        
+        if (userData) {
+            // Display username if it exists
+            const usernameElement = document.getElementById('usernameDisplay');
+            if (usernameElement) {
+                usernameElement.textContent = userData.username || 'Guest';
+            }
+            
+            // Display profile picture if it exists
+            const profileElement = document.getElementById('profileDisplay');
+            if (profileElement) {
+                if (userData.profilePicture) {
+                    profileElement.src = userData.profilePicture;
+                } else {
+                    // Set a default profile picture if none exists
+                    profileElement.src = 'images/profile-picture.jpg';
+                }
+            }
+        } else {
+            console.log('No user data found');
+            // Handle the case when no user is logged in
+            document.getElementById('usernameDisplay').textContent = 'Guest';
+            document.getElementById('profileDisplay').src = 'images/profile-picture.jpg';
+        }
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        // Handle any errors that occur while loading the data
+        document.getElementById('usernameDisplay').textContent = 'Guest';
+        document.getElementById('profileDisplay').src = 'images/profile-picture.jpg';
+    }
+  </script>
+</html>

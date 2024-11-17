@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="global.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">RecipeHub</div>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="about_us.html">About</a></li>
+                <li><a href="contact_us.html">Contact</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+            <a href="profile.html" class="profile-button">
+                <img id="headerProfileImage" alt="User Profile Picture" />
+            </a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Settings</h1>
+
+        <h2>Your Current Profile</h2>
+        <div class="current-profile">
+            <img id="currentProfileImage" alt="Profile Picture" width="100">
+            <p>Username: <span id="currentUsername">Not Set</span></p>
+        </div>
+
+        <h2>Edit Profile</h2>
+        <div class="edit-section">
+            <label for="editUsername">Username:</label>
+            <input type="text" id="editUsername" placeholder="Enter new username">
+            <button onclick="updateUsername()">Save Username</button>
+        </div>
+
+        <h2>Change Profile Picture</h2>
+        <div class="edit-section">
+            <input type="file" id="editProfilePicture" accept="image/*">
+            <div id="imagePreview" style="display: none; margin: 10px 0;">
+                <img id="previewImage" alt="Preview" style="max-width: 200px;">
+            </div>
+            <button onclick="updateProfilePicture()">Save Profile Picture</button>
+        </div>
+
+        <h2>Change Password</h2>
+        <div class="edit-section">
+            <label for="oldPassword">Old Password:</label>
+            <input type="password" id="oldPassword" placeholder="Enter your old password">
+            
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" placeholder="Enter your new password">
+            
+            <label for="confirmPassword">Confirm New Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm new password">
+            
+            <button onclick="changePassword()">Change Password</button>
+        </div>
+
+        <div class="danger-zone">
+            <h2>Account Actions</h2>
+            <button class="delete-btn" onclick="deleteAccount()">Delete Account</button><p><br></p>
+            <button class="delete-btn" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to display current profile data
+        function loadCurrentProfile() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('userData'));
+                
+                if (userData) {
+                    // Display username
+                    document.getElementById('currentUsername').textContent = userData.username || 'Not Set';
+                    
+                    // Display profile picture in both header and settings
+                    const profileImages = [
+                        document.getElementById('currentProfileImage'),
+                        document.getElementById('headerProfileImage')
+                    ];
+                    
+                    profileImages.forEach(img => {
+                        if (img) {
+                            img.src = userData.profilePicture || 'images/profile-picture.jpg.png';
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Error loading profile data');
+            }
+        }
+
+        // Function to update username
+        function updateUsername() {
+            try {
+                const newUsername = document.getElementById('editUsername').value.trim();
+                if (!newUsername) {
+                    alert('Please enter a valid username.');
+                    return;
+                }
+
+                const userData = JSON.parse(localStorage.getItem('userData')) || {};
+                userData.username = newUsername;
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
+                alert('Username updated successfully!');
+                loadCurrentProfile();
+                document.getElementById('editUsername').value = '';
+            } catch (error) {
+                console.error('Error updating username:', error);
+                alert('Error updating username');
+            }
+        }
+
+        // Preview image before upload
+        document.getElementById('editProfilePicture').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('previewImage');
+                    preview.src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to update profile picture
+        async function updateProfilePicture() {
+            try {
+                const fileInput = document.getElementById('editProfilePicture');
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    alert('Please select an image first.');
+                    return;
+                }
+
+                if (file.size > 1024 * 1024) {
+                    alert('Image size should be less than 1MB');
+                    return;
+                }
+
+                const base64Image = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                const userData = JSON.parse(localStorage.getItem('userData')) || {};
+                userData.profilePicture = base64Image;
+                localStorage.setItem('userData', JSON.stringify(userData));
+
+                alert('Profile picture updated successfully!');
+                loadCurrentProfile();
+                document.getElementById('imagePreview').style.display = 'none';
+                fileInput.value = '';
+            } catch (error) {
+                console.error('Error updating profile picture:', error);
+                alert('Error updating profile picture');
+            }
+        }
+
+        // Function to change password
+        function changePassword() {
+            try {
+                const oldPassword = document.getElementById('oldPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                const userData = JSON.parse(localStorage.getItem('userData'));
+                
+                if (!userData || oldPassword !== userData.password) {
+                    alert('Incorrect old password.');
+                    return;
+                }
+
+                if (!newPassword) {
+                    alert('Please enter a new password.');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert('New password and confirm password do not match.');
+                    return;
+                }
+
+                userData.password = newPassword;
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
+                alert('Password changed successfully!');
+                // Clear password fields
+                document.getElementById('oldPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            } catch (error) {
+                console.error('Error changing password:', error);
+                alert('Error changing password');
+            }
+        }
+
+        // Function to delete account
+        function deleteAccount() {
+            const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+            if (confirmation) {
+                try {
+                    localStorage.removeItem('userData');
+                    alert('Account deleted successfully!');
+                    window.location.href = "login.html";
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    alert('Error deleting account');
+                }
+            }
+        }
+
+        // Function to handle logout
+        function logout() {
+            try {
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error('Error logging out:', error);
+                alert('Error logging out');
+            }
+        }
+
+        // Load current profile data when the page loads
+        document.addEventListener('DOMContentLoaded', loadCurrentProfile);
+    </script>
+
+      <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 RecipeHub. All Rights Reserved.</p>
+  </footer>
+  
+</body>
+</html>

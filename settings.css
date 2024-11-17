@@ -1,0 +1,140 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url('images/bg.jpg');
+}
+
+/* Container for settings page */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #4a90e2;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #444;
+    font-size: 1.6rem;
+    margin: 20px 0 10px 0;
+    border-bottom: 2px solid #f2f2f2;
+    padding-bottom: 5px;
+}
+
+/* Form elements */
+label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #357ab7;
+}
+
+/* Delete Account button */
+.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Profile preview */
+#currentUsername {
+    font-weight: bold;
+    color: #555;
+}
+
+#currentProfileImage {
+    border-radius: 100%;
+    margin-top: 10px;
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: cover;
+}
+
+/* Input field error states */
+input:invalid {
+    border-color: #e74c3c;
+}
+
+input:valid {
+    border-color: #4a90e2;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    .delete-btn {
+        font-size: 1rem;
+    }
+}
+

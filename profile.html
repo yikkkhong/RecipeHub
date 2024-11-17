@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* Reset margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-image: url('images/bg.jpg');
+        }
+
+        /* Full-width and height for body and html */
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Header styling with the background image */
+        h3 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/UPBackground.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 225px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            padding: 20px;
+            max-width: 800px;
+            margin: -50px auto 0; /* Pull up the section for overlap effect */
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* User info container */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Circular profile image */
+        .user-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        /* Name and badge styling */
+        .user-info h2 {
+            font-size: 24px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info h2 span {
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .user-info p {
+            font-size: 16px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* Follow and Message buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-buttons button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .follow-btn {
+            background-color: #000;
+            color: white;
+        }
+
+        .message-btn {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+
+        /* Followers and Following info */
+        .social-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .social-info span {
+            font-weight: bold;
+        }
+
+        /* Bio section */
+        .bio {
+            margin-top: 15px;
+            color: #555;
+            font-size: 15px;
+        }
+
+        /* Links to website and channels */
+        .links {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        /* Categories section */
+        .categories {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category {
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Grid layout for additional boxes */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Reveal the grid container when the hidden class is removed */
+        .grid-container.show {
+            display: grid;
+        }
+
+        .grid-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0; /* Start transparent */
+            transform: translateY(20px); /* Start slightly shifted down */
+            animation: fadeInUp 0.6s forwards; /* Animation to fade in and move up */
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Delays for sequential fade-in */
+        .grid-item:nth-child(1) { animation-delay: 0.2s; }
+        .grid-item:nth-child(2) { animation-delay: 0.4s; }
+        .grid-item:nth-child(3) { animation-delay: 0.6s; }
+        .grid-item:nth-child(4) { animation-delay: 0.8s; }
+        .grid-item:nth-child(5) { animation-delay: 1s; }
+        .grid-item:nth-child(6) { animation-delay: 1.2s; }
+
+        /* Styling for images inside grid items */
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 150px; /* Limit height for uniformity */
+            object-fit: cover;
+        }
+
+        /* Text section under each image */
+        .grid-item .caption {
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+      <!-- Header -->
+  <header>
+    <div class="logo">RecipeHub</div>
+    <nav>
+      <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="about_us.html">About</a></li>
+        <li><a href="contact_us.html">Contact</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+      <a href="profile.html" class="profile-button">
+        <img src="images/profile-picture.jpg" alt="User Profile Picture" />
+      </a>
+    </nav>
+    
+
+    
+  </header>
+
+    <h3>
+        <!-- Background image header -->
+    </h3>
+
+
+    
+    <section class="user-profile">
+        <!-- User Information -->
+        <div class="user-info">
+            <img id = "profileDisplay" alt="Chef Profile Picture"> <!-- Circular profile picture -->
+            <div>
+                <h2 id="usernameDisplay"> <span>•</span></h2>
+                <p>Team Mateam</p>
+                <div class="social-info">
+                    <span>12K</span> Followers · <span>12</span> Following
+                </div>
+                <div class="action-buttons">
+                    <button class="follow-btn">Follow</button>
+                    <button class="message-btn">Message</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="bio">
+            Seasonal, regional & 80% vegetarian - that's my approach. I'm happy if I can inspire you with my recipes.
+        </div>
+
+        <!-- Links to website and channels -->
+        <div class="links">
+            <a href="https://www.Khunais.com">www.Khunais.com</a>
+            <a href="#">Khunais food_vie</a>
+            <a href="#">Channel/Khunais</a>
+        </div>
+
+        <!-- Categories section -->
+        <div class="categories">
+            <div class="category" id="AllRecipes">Show Posted Recipes</div>
+            <div class="category" id="AllBlogs">Show Posted Blogs</div>
+        </div>
+    </section>
+
+    <!-- Six Box Grid Layout with Images -->
+    <div class="grid-container" id="gridContainer">
+        <div class="grid-item">
+            <img src="images/foods/japanese-curry.png" alt="Japanese Curry With Winter Squash and Mushrooms">
+            <div class="caption">Japanese Curry With Baked Chicken and Mushrooms</div>
+        </div>
+        <div class="grid-item">
+            <img src="images/foods/grilled-chicken.png" alt="Recipe 2">
+            <div class="caption">Low-calorie, high-satisfaction Grilled Chicken</div>
+        </div>
+        <div class="grid-item">
+            <img src="images/foods/spaghetti-carbonara.jpg" alt="Recipe 3">
+            <div class="caption">Authentic Italian Spaghetti Carbonara</div>
+        </div>
+        </div>
+    </div>
+
+        <!-- Six Box Grid Layout with Images -->
+        <div class="grid-container" id="gridContainerBlogs">
+            <div class="grid-item">
+                <img src="images/blog/blogs-profile1.jpg" alt="Japanese Curry With Winter Squash and Mushrooms">
+                <div class="caption">My brother took pictures of me cooking...</div>
+            </div>
+            <div class="grid-item">
+                <img src="images/blog/blogs-profile2.jpg" alt="Recipe 2">
+                <div class="caption">Today I learned from the master how to arrange dishes...</div>
+            </div>
+            <div class="grid-item">
+                <img src="images/blog/blogs-profile3.png" alt="Recipe 3">
+                <div class="caption">Getting ready to buy a new oven...</div>
+            </div>
+        </div>
+
+    <script>
+        // JavaScript to show the grid when "All Recipes" is clicked
+        document.getElementById("AllRecipes").addEventListener("click", function() {
+            document.getElementById("gridContainer").classList.add("show");
+        });
+
+        // JavaScript to show the grid when "All Blogs" is clicked
+        document.getElementById("AllBlogs").addEventListener("click", function() {
+            document.getElementById("gridContainerBlogs").classList.add("show");
+        });
+
+
+    </script>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 RecipeHub. All Rights Reserved.</p>
+  </footer>
+
+  
+</body>
+
+<script>
+    try {
+        // Get the user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        
+        if (userData) {
+            // Display username if it exists
+            const usernameElement = document.getElementById('usernameDisplay');
+            if (usernameElement) {
+                usernameElement.textContent = userData.username || 'Guest';
+            }
+            
+            // Display profile picture if it exists
+            const profileElement = document.getElementById('profileDisplay');
+            if (profileElement) {
+                if (userData.profilePicture) {
+                    profileElement.src = userData.profilePicture;
+                } else {
+                    // Set a default profile picture if none exists
+                    profileElement.src = 'images/profile-picture.jpg';
+                }
+            }
+        } else {
+            console.log('No user data found');
+            // Handle the case when no user is logged in
+            document.getElementById('usernameDisplay').textContent = 'Guest';
+            document.getElementById('profileDisplay').src = 'images/profile-picture.jpg';
+        }
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        // Handle any errors that occur while loading the data
+        document.getElementById('usernameDisplay').textContent = 'Guest';
+        document.getElementById('profileDisplay').src = 'images/profile-picture.jpg';
+    }
+  </script>
+  
+</html>

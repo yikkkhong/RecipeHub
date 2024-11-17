@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Page</title>
+    <link rel="stylesheet" href="reviews.css">
+</head>
+<body>
+    <div class="review-container">
+        <h2>Write a Review</h2>
+
+        <!-- Display Username -->
+        <p id="usernameDisplay"></p>
+
+        <!-- Star Rating -->
+        <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+        </div>
+
+        <!-- Image Upload -->
+        <label for="uploadImage">Upload an image (will be resized to 512x512px):</label>
+        <input type="file" id="uploadImage" accept="image/*">
+        <img id="imagePreview" style="max-width: 200px; display: none;">
+
+        <!-- Review Description -->
+        <textarea id="description" placeholder="Write your review..."></textarea>
+
+        <!-- Submit Review -->
+        <button id="submitReview">Submit Review</button>
+
+    </div>
+
+    <script src="reviews.js"></script>
+
+    <!-- javascript of id -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = parseInt(urlParams.get('id'));
+
+        let recipes = [];
+        loadRecipesFromIndexedDB(recipeId);
+
+        function loadRecipesFromIndexedDB(recipeId) {
+            const request = indexedDB.open("recipeDB", 1);
+
+            request.onsuccess = function(event) {
+                const db = event.target.result;
+                const transaction = db.transaction(["recipes"], "readonly");
+                const objectStore = transaction.objectStore("recipes");
+                const getRequest = objectStore.get(recipeId);
+
+                getRequest.onsuccess = function() {
+                    const recipe = getRequest.result;
+                    if (recipe) {
+                        displayReviews(recipe);
+                    } else {
+                        document.getElementById("recipeDetail").innerHTML = "<p>Recipe not found.</p>";
+                    }
+                };
+            };
+        }
+
+    </script>
+</body>
+</html>
